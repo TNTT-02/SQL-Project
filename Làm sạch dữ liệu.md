@@ -79,3 +79,7 @@ With CTE5 as (
 Delete from CTE5 Where rn5 >1;
 DELETE FROM [dbo].[International sale Report]
 WHERE TRY_CONVERT(DATE, [DATE]) IS NULL;
+ALTER TABLE [International sale Report]
+ALTER COLUMN [GROSS AMT] DECIMAL(10, 2);
+ALTER TABLE [International sale Report]
+ALTER COLUMN PCS DECIMAL(10, 2);
