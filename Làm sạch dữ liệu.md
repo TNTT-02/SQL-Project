@@ -31,6 +31,8 @@ Update [Amazon Sale Report]
 Set 
 	shipcity = lower(shipcity),
 	shipstate = lower(shipstate);
+ALTER TABLE [Amazon Sale Report]
+ALTER COLUMN Amount DECIMAL(10, 2);
 
 Delete from [May-2022]
 Where
