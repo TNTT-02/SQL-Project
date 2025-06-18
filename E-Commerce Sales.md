@@ -1,5 +1,5 @@
-## SQL-Project
-# Cleaning Data
+# SQL-Project
+## Cleaning Data
 Use [E-Commerce Sales Dataset]
 update [Amazon Sale Report]
 set 
@@ -88,7 +88,7 @@ ALTER TABLE [International sale Report]
 	ALTER COLUMN PCS DECIMAL(10, 2);
 
 
-# Answer Business Questions
+## Answer Business Questions
 -- Q1. Viết lệnh truy vấn doanh thu Category giao thành công và có doanh thu của Amazon--
 Use [E-Commerce Sales Dataset]
 Select
