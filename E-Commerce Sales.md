@@ -47,8 +47,7 @@ With CTE2 As (
     FROM [May-2022]
 )
 DELETE FROM CTE2 WHERE rn2 > 1; --> Xóa dòng dữ liệu bị trùng lặp
-
-
+--Thao tác với bảng P_L March 2021--
 Delete from [P_L March 2021]
 Where
 	[Ajio MRP]  = 'Nill' or
@@ -57,8 +56,8 @@ With CTE3 As (
 	SELECT *, ROW_NUMBER() OVER (PARTITION BY Sku, [Style Id], Catalog, Category, Weight, [TP 1], [TP 2] ORDER BY Sku) AS rn3
     FROM [P_L March 2021]
 )
-DELETE FROM CTE3 WHERE rn3 > 1;
-
+DELETE FROM CTE3 WHERE rn3 > 1;--> Xóa dòng dữ liệu bị trùng lặp
+--Thao tác với bảng Sale Report--
 Delete from [Sale Report]
 Where [SKU Code] = '#REF!'
 	or [SKU Code] IS NULL 
@@ -68,7 +67,7 @@ With CTE4 As (
     FROM [Sale Report]
 )
 DELETE FROM CTE4 WHERE rn4 > 1;--> Xóa dòng dữ liệu bị trùng lặp
-
+-- Thao tác với bảng Interntional sale Report --
 Delete from [International sale Report]
 Where SKU = ' '
 	or SKU = 'SHIPPING'
@@ -80,17 +79,33 @@ With CTE5 as (
 	Select *, Row_number() over (Partition by SKU, Style, CUSTOMER, Months, DATE, Size, PCS, RATE, [GROSS AMT] Order by DATE) as rn5
 	from [International sale Report]
 )
-Delete from CTE5 Where rn5 >1;
+Delete from CTE5 Where rn5 >1;--> Xóa dòng dữ liệu bị trùng lặp
 DELETE FROM [dbo].[International sale Report]
 WHERE TRY_CONVERT(DATE, [DATE]) IS NULL;
 ALTER TABLE [International sale Report]
-	ALTER COLUMN [GROSS AMT] DECIMAL(10, 2);
+	ALTER COLUMN [GROSS AMT] DECIMAL(10, 2);--> Đổi kiểu dữ liệu cột GROSS AMT
 ALTER TABLE [International sale Report]
-	ALTER COLUMN PCS DECIMAL(10, 2);
-
-
+	ALTER COLUMN PCS DECIMAL(10, 2);--> Đổi kiểu dữ liệu cột PCS
+## Database Exploration
+Purpose:
+    - To explore the structure of the database, including the list of tables and their schemas.
+    - To inspect the columns and metadata for specific tables.
+-- Retrieve a list of all tables in the database
+Use [E-Commerce Sales Dataset]
+Select *
+From INFORMATION_SCHEMA.TABLES;
+-- Retrieve all columns for a specific table
+Use [E-Commerce Sales Dataset]
+Select *
+From [Amazon Sale Report]
+-- Get a list of unique cities where orders go
+Use [E-Commerce Sales Dataset]
+Select distinct
+	shipcity
+From [Amazon Sale Report]
+Order by shipcity
 ## Answer Business Questions
--- Q1. Viết lệnh truy vấn doanh thu Category giao thành công và có doanh thu của Amazon--
+-- Q1. Write a query for Category revenue that is successfully delivered and has Amazon revenue--
 Use [E-Commerce Sales Dataset]
 Select
 	[Order ID],
@@ -104,7 +119,7 @@ Where
 Group by Category, Amount, [Order ID], Date
 Order by Category ASC;
 
--- Q2. Viết lệnh truy vấn thống kê số lượng sản phẩm bán chạy theo kích cỡ, màu sắc--
+-- Q2. Write a query to count the number of best-selling products by size and color--
 With cte1 as (
 	Select 
 		a.SKU, 
@@ -133,7 +148,7 @@ From cte1
 Group by SKU, Style, Size, Color, Category
 Order by tong_so_don DESC;
 
--- Q3. Viết lệnh truy vấn 10 thành phố có nhiều đơn thành công nhất. Sắp xếp theo thứ tự từ cao xuống thấp--
+-- Q3. Write a query to find the 10 cities with the most successful orders. Sort from highest to lowest--
 Select distinct top 10
 	shipcity,
 	COUNT ([Order ID]) as tong_so_don
@@ -142,7 +157,7 @@ Where [Courier Status] = 'Shipped'
 Group by shipcity
 Order by dem DESC;
 
---Q4. Viết lệnh truy vấn 10 thành phố có doanh số bán hàng lớn nhất. Sắp xếp doanh số theo thứ tự giảm dần
+--Q4. Viết lệnh truy vấn 10 thành phố có doanh số bán hàng lớn nhất. Sắp xếp doanh số theo thứ tự giảm dần --
 Select distinct top 10
 	shipcity,
 	Sum (Amount) as total_sale
@@ -152,7 +167,7 @@ Where
 Group by shipcity
 Order by total_sale DESC;
 
---Q5. Viết lệnh truy vấn tổng doanh thu doanh thu và tổng số lượng khách hàng theo từng tháng
+--Q5. Write a query for total revenue and total number of customers by month --
 Select 
 	MONTH(a.Date) as order_month,
 	Sum(a.Amount) as total_sales,
@@ -163,7 +178,7 @@ Where a.[Courier Status] = 'Shipped'
 Group by MONTH(a.Date)
 Order by MONTH(a.Date)
 
---Q6. Viết lệnh truy vấn tỷ trọng của từng danh mục trong tổng doanh thu
+--Q6. Write a query to find the proportion of each category in total revenue --
 WITH cte2 AS (
     SELECT 
         Category,
@@ -180,7 +195,7 @@ SELECT
     (CategoryTotal * 100.0 / GrandTotal) AS Percentage
 FROM cte2;
 
---Q7. Viết truy vấn tính tổng chi tiêu, số lượng đơn hàng, và sản phẩm độc nhất theo thành phố
+--Q7. Write a query to calculate total spend, number of orders, and unique products by city --
 SELECT 
     shipcity,
     COUNT(DISTINCT SKU) AS UniqueProducts,
@@ -191,7 +206,7 @@ WHERE [Courier Status] = 'Shipped'
 GROUP BY shipcity
 ORDER BY TotalSpent DESC;
 
---Q8.Viết truy vấn tính tổng số lượng bán, doanh thu, và giá trung bình theo SKU
+--Q8.Write a query to calculate the total sales quantity, revenue, and average price by SKU --
 SELECT 
     SKU,
     Category,
