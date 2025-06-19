@@ -3,7 +3,7 @@
 ## Project Overview
 
 **Project Title**:  E-Commerce Sales 
-**Database**: [E-Commerce Sales]([url](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data/data))
+**Database**: [[E-Commerce Sales]](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data/data)
 **Data capacity**: Includes 5 files, total 178,343 thousand rows of data
 
 This project aims to analyze Amazon's e-commerce sales in 2022. The data is collected on the Kaggle website in the form of raw data. Through processing and analysis, some results are drawn as follows:
