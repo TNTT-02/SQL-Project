@@ -1,12 +1,13 @@
 # SQL-Project
 ## Cleaning Data
 Use [E-Commerce Sales Dataset]
-update [Amazon Sale Report]
+-- Thao tác với bảng Amazon Sale Report--
+update [Amazon Sale Report] --> Điền các giá trị trống ở cột Amount bằng giá trị 0
 set 
 	Amount = 0
 where 
 	Amount = ' ';
-update [Amazon Sale Report]
+update [Amazon Sale Report]--> Điền các giá trị trống ở cột Courier Status bằng giá trị Unshipped
 set 
 	[Courier Status] = 'Unshipped'
 Where 
@@ -21,22 +22,22 @@ WITH CTE AS (
     SELECT *, ROW_NUMBER() OVER (PARTITION BY [Order ID], Status, Date, SKU, Amount ORDER BY Date) AS rn
     FROM [Amazon Sale Report]
 )
-DELETE FROM CTE WHERE rn > 1;
-Delete From [Amazon Sale Report]
+DELETE FROM CTE WHERE rn > 1;--> Xóa dòng dữ liệu bị trùng lặp
+Delete From [Amazon Sale Report] --> Xóa dòng dữ liệu có giá trị NUll
 Where
 	[Order ID] is NULL
 	Or Date is NULL
 	Or Status is NULL;
-Update [Amazon Sale Report]
+Update [Amazon Sale Report] --> Chuẩn hóa cột shipcity và shipstate
 Set 
 	shipcity = lower(shipcity),
 	shipstate = lower(shipstate);
 Use [E-Commerce Sales Dataset]
 ALTER TABLE [Amazon Sale Report]
-ALTER COLUMN Amount DECIMAL(10, 2);
+ALTER COLUMN Amount DECIMAL(10, 2); --> Đổi kiểu dữ liệu của cột Amount
 ALTER TABLE [Amazon Sale Report]
-ALTER COLUMN Qty DECIMAL(10, 2);
-
+ALTER COLUMN Qty DECIMAL(10, 2); --> Đổi kiểu dữ liệu của cột Qty
+--Thao tác với bảng May-2022--
 Delete from [May-2022]
 Where
 	[Ajio MRP]  = 'Nill' or
@@ -45,7 +46,7 @@ With CTE2 As (
 	SELECT *, ROW_NUMBER() OVER (PARTITION BY Sku, [Style Id], Catalog, Category, Weight, TP ORDER BY Sku) AS rn2
     FROM [May-2022]
 )
-DELETE FROM CTE2 WHERE rn2 > 1;
+DELETE FROM CTE2 WHERE rn2 > 1; --> Xóa dòng dữ liệu bị trùng lặp
 
 
 Delete from [P_L March 2021]
@@ -61,12 +62,12 @@ DELETE FROM CTE3 WHERE rn3 > 1;
 Delete from [Sale Report]
 Where [SKU Code] = '#REF!'
 	or [SKU Code] IS NULL 
-	or [SKU Code] = ' ';
+	or [SKU Code] = ' ';--> Xóa dòng dữ liệu bị lỗi hoặc NULL
 With CTE4 As (
 	SELECT *, ROW_NUMBER() OVER (PARTITION BY [SKU Code], [Design No], Stock, Category, Size, Color ORDER BY [Design No]) AS rn4
     FROM [Sale Report]
 )
-DELETE FROM CTE4 WHERE rn4 > 1;
+DELETE FROM CTE4 WHERE rn4 > 1;--> Xóa dòng dữ liệu bị trùng lặp
 
 Delete from [International sale Report]
 Where SKU = ' '
@@ -74,7 +75,7 @@ Where SKU = ' '
 	or SKU = 'TAGS'
 	or SKU = 'TAG PRINTING'
 	or SKU = 'TAGS(LABOUR)'
-	or SKU = 'SHIPPING CHARGES';
+	or SKU = 'SHIPPING CHARGES';--> Xóa dòng dữ liệu không đúng định dạng
 With CTE5 as (
 	Select *, Row_number() over (Partition by SKU, Style, CUSTOMER, Months, DATE, Size, PCS, RATE, [GROSS AMT] Order by DATE) as rn5
 	from [International sale Report]
