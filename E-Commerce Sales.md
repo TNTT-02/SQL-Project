@@ -90,6 +90,8 @@ ALTER TABLE [International sale Report]
 Purpose:
     - To explore the structure of the database, including the list of tables and their schemas.
     - To inspect the columns and metadata for specific tables.
+    - To explore the structure of dimension tables.
+    - To understand the range of historical data.
 -- Retrieve a list of all tables in the database
 Use [E-Commerce Sales Dataset]
 Select *
@@ -103,7 +105,13 @@ Use [E-Commerce Sales Dataset]
 Select distinct
 	shipcity
 From [Amazon Sale Report]
-Order by shipcity
+Order by shipcity;
+-- Get a list of months in the data
+Use [E-Commerce Sales Dataset]
+Select distinct
+	MONTH(DATE) as thang
+From [Amazon Sale Report]
+Order by MONTH(DATE);
 ## Answer Business Questions
 -- Q1. Write a query for Category revenue that is successfully delivered and has Amazon revenue--
 Use [E-Commerce Sales Dataset]
