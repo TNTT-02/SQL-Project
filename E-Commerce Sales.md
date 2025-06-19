@@ -163,7 +163,7 @@ Select distinct top 10
 From [Amazon Sale Report]
 Where [Courier Status] = 'Shipped'
 Group by shipcity
-Order by dem DESC;
+Order by tong_so_don DESC;
 
 --Q4. Viết lệnh truy vấn 10 thành phố có doanh số bán hàng lớn nhất. Sắp xếp doanh số theo thứ tự giảm dần --
 Select distinct top 10
