@@ -3,23 +3,25 @@
 ## Project Overview
 
 **Project Title**:  E-Commerce Sales 
-**Database**: [[E-Commerce Sales]](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data/data)
+
+**Database**: [E-Commerce Sales](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data/data)
+
 **Data capacity**: Includes 5 files, total 178,343 thousand rows of data
 
 This project aims to analyze Amazon's e-commerce sales in 2022. The data is collected on the Kaggle website in the form of raw data. Through processing and analysis, some results are drawn as follows:
 
 ## Result
 
-1. **Monthly Revenue**: The month with the highest revenue was June with revenue reaching 13,776,846,954 INR
-2. **Best selling products**: The product with the highest number of orders has SKU code SET268-KR-NP-L size L, color OFF WHITE with 5525, sales reached 7,714,850 INR
-3. **Area with most orders**: Top 10 cities with most orders and highest revenue are bengaluru, hyderabad, mumbai, new delhi, chennai, pune, kolkata, gurugram, thane, noida
+1. **Monthly Revenue**: The month with the highest revenue was June with revenue reaching *13,776,846,954 INR*
+2. **Best selling products**: The product with the highest number of orders is SKU *SET268-KR-NP-L size L*, color *OFF WHITE* with *5525 orders*, sales reached *7,714,850 INR*
+3. **Area with most orders**: Top 10 cities with most orders and highest revenue are *bengaluru, hyderabad, mumbai, new delhi, chennai, pune, kolkata, gurugram, thane, noida*
 
 
 ## Project Structure
 
 ### 1. Prepare data
 
-Raw data collected from Kaggle website
+Raw data collected from [Kaggle website](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data/data)
 
 ### 2. Data Exploration & Cleaning
 
